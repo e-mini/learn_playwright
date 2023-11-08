@@ -15,3 +15,19 @@ def test_get_started_link(page: Page):
 
     # Expects page to have a heading with the name of Installation.
     expect(page.get_by_role("heading", name="Installation")).to_be_visible()
+
+def test_can_login(page: Page):
+    # setup
+    page.goto("https://the-internet.herokuapp.com/login")
+
+    # test
+    page.locator("#username").fill("tomsmith")
+    page.locator("#password").fill("SuperSecretPassword!")
+    page.locator(".radius").click()
+
+    # assertion
+    expect(page.locator("#flash-messages")).to_be_visible()
+    expect(page.locator(".secondary")).to_be_visible()
+
+    # tear down
+    page.locator(".secondary").click()
