@@ -1,5 +1,17 @@
 # Learn Playwright Automation Testing Tool
 
+# Pre Requisites:
+
+1. pytest
+2. playwright
+3. faker
+
+Test Automation Framework
+
+1. Test Runner - pytest
+2. Automation Tool - playwright
+3. Assertion Library - pyhamcrest
+
 # Setup Instructions:
 
 1. clone repo

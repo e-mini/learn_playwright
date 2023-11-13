@@ -1,5 +1,6 @@
 import re
 from playwright.sync_api import Page, expect
+from pages.home_page import HomePage
 
 def test_has_title(page: Page):
     page.goto("https://playwright.dev/")
@@ -33,37 +34,19 @@ def test_can_login(page: Page):
     page.locator(".secondary").click()
 
 
-
     # homework
     # registration test
 def test_can_register(page: Page):
-    # setup
-    page.goto("https://parabank.parasoft.com/parabank/index.htm")
+    home_page = HomePage(page)
+    home_page.load(page)
 
-    # test
-    page.get_by_text("Register").click()
-    register_user(page)
+    home_page.go_to_registration_page()
+    home_page.register_user(page)
 
+    expect(home_page.account_created_message).to_be_visible()
+    expect(home_page.log_out_link).to_be_visible()
 
-    # assertion
-    expect(page.get_by_text("Your account was created successfully. You are now logged in.")).to_be_visible()
-    expect(page.get_by_text("Log Out")).to_be_visible()
-    # tear down
-    page.get_by_text("Log Out").click()
-def register_user(page: Page ):
-    page.locator('input[name="customer.firstName"]').fill("Robin")
-    page.locator('input[name="customer.lastName"]').fill("Sample")
-    page.locator('input[name="customer.address.street"]').fill("123 Main St.")
-    page.locator('input[name="customer.address.city"]').fill("Atlanta")
-    page.locator('input[name="customer.address.state"]').fill("Georgia")
-    page.locator('input[name="customer.address.zipCode"]').fill("30324")
-    page.locator('input[name="customer.phoneNumber"]').fill("(123)456-7890")
-    page.locator('input[name="customer.ssn"]').fill("123-456-7890")
-    page.locator('input[name="customer.username"]').fill("robinsam")
-    page.locator('input[name="customer.password"]').fill("sampley")
-    page.locator("#repeatedPassword").fill("sampley")
-    page.locator('input[value="Register"]').click()
-
+    home_page.log_out_link.click()
 
 def test_can_still_login(page: Page):
     # setup
