@@ -31,3 +31,53 @@ def test_can_login(page: Page):
 
     # tear down
     page.locator(".secondary").click()
+
+
+
+    # homework
+    # registration test
+def test_can_register(page: Page):
+    # setup
+    page.goto("https://parabank.parasoft.com/parabank/index.htm")
+
+    # test
+    page.get_by_text("Register").click()
+    register_user(page)
+
+
+    # assertion
+    expect(page.get_by_text("Your account was created successfully. You are now logged in.")).to_be_visible()
+    expect(page.get_by_text("Log Out")).to_be_visible()
+    # tear down
+    page.get_by_text("Log Out").click()
+def register_user(page: Page ):
+    page.locator('input[name="customer.firstName"]').fill("Robin")
+    page.locator('input[name="customer.lastName"]').fill("Sample")
+    page.locator('input[name="customer.address.street"]').fill("123 Main St.")
+    page.locator('input[name="customer.address.city"]').fill("Atlanta")
+    page.locator('input[name="customer.address.state"]').fill("Georgia")
+    page.locator('input[name="customer.address.zipCode"]').fill("30324")
+    page.locator('input[name="customer.phoneNumber"]').fill("(123)456-7890")
+    page.locator('input[name="customer.ssn"]').fill("123-456-7890")
+    page.locator('input[name="customer.username"]').fill("robinsam")
+    page.locator('input[name="customer.password"]').fill("sampley")
+    page.locator("#repeatedPassword").fill("sampley")
+    page.locator('input[value="Register"]').click()
+
+
+def test_can_still_login(page: Page):
+    # setup
+    page.goto("https://parabank.parasoft.com/parabank/index.htm")
+
+    # test
+    page.get_by_text("name=username").fill("bobdylan")
+    page.get_by_text("name=password").fill("bobdylan")
+    page.get_by_text("value=Log In").click()
+   
+
+
+    # assertion
+    expect(page.get_by_text("href=https://parabank.parasoft.com/parabank/logout.htm")).to_be_visible()
+
+    # tear down
+    page.get_by_text("href=https://parabank.parasoft.com/parabank/logout.htm").click()
