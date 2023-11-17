@@ -1,6 +1,7 @@
 import re
 from playwright.sync_api import Page, expect
 from pages.home_page import HomePage
+from faker import Faker
 
 def test_has_title(page: Page):
     page.goto("https://playwright.dev/")
@@ -37,11 +38,23 @@ def test_can_login(page: Page):
     # homework
     # registration test
 def test_can_register(page: Page):
+    faker = Faker()
+    first_name = faker.name().split(" ")[0]
+    last_name = faker.name().split(" ")[1]
+    address = faker.address().split("\n")[0]
+    city = faker.city()
+    state = faker.state()
+    zip_code = faker.zipcode()
+    phone_number = faker.phone_number()
+    ssn = faker.ssn()
+    user_name = faker.user_name() + faker.zipcode()
+    password = faker.word()
+
     home_page = HomePage(page)
     home_page.load(page)
 
     home_page.go_to_registration_page()
-    home_page.register_user(page)
+    home_page.register_user(first_name, last_name, address, city, state, zip_code, phone_number, ssn, user_name, password)
 
     expect(home_page.account_created_message).to_be_visible()
     expect(home_page.log_out_link).to_be_visible()
@@ -49,12 +62,38 @@ def test_can_register(page: Page):
     home_page.log_out_link.click()
 
 def test_can_still_login(page: Page):
+    # create test data
+    faker = Faker()
+    first_name = faker.name().split(" ")[0]
+    last_name = faker.name().split(" ")[1]
+    address = faker.address().split("\n")[0]
+    city = faker.city()
+    state = faker.state()
+    zip_code = faker.zipcode()
+    phone_number = faker.phone_number()
+    ssn = faker.ssn()
+    user_name = faker.user_name() + faker.zipcode()
+    password = faker.word()
     home_page = HomePage(page)
     home_page.load(page)
+    home_page.go_to_registration_page()
+    home_page.register_user(first_name, last_name, address, city, state, zip_code, phone_number, ssn, user_name,
+                            password)
+    home_page.log_out_link.click()
 
-    home_page.test_registration(page)
-
+    # actual test logging in begins
+    home_page.test_login(user_name, password)
     expect(home_page.log_out_link).to_be_visible()
 
     home_page.log_out_link.click()
+
+
+# building blocks
+
+# able to code in programming language
+# able to use test runner
+# able
+    # test should always host the test data
+    # assertions should always be in the test
+
 

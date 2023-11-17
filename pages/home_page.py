@@ -35,25 +35,24 @@ class HomePage:
     def go_to_registration_page(self):
         self.register_link.click()
 
-    def register_user(self, page):
-        self.first_name_input.fill("Robin")
-        self.last_name_input.fill("Sample")
-        self.address_street_input.fill("123 Main St.")
-        self.address_city_input.fill("Atlanta")
-        self.customer_address_state.fill("Georgia")
-        self.customer_zipCode.fill("30324")
-        self.customer_phoneNumber.fill("(123) 456-7890")
-        self.customer_ssn.fill("123-456-7890")
-        self.customer_username.fill("robinsam")
-        self.customer_password.fill("sampley")
-        self.customer_repeated_password.fill("sampley")
+    def register_user(self, first_name, last_name, address, city, state, zip_code, phone_number, ssn, user_name, password):
+        self.first_name_input.fill(first_name)
+        self.last_name_input.fill(last_name)
+        self.address_street_input.fill(address)
+        self.address_city_input.fill(city)
+        self.customer_address_state.fill(state)
+        self.customer_zipCode.fill(zip_code)
+        self.customer_phoneNumber.fill(phone_number)
+        self.customer_ssn.fill(ssn)
+        self.customer_username.fill(user_name)
+        self.customer_password.fill(password)
+        self.customer_repeated_password.fill(password)
         self.registration_link.click()
 
-    def test_registration(self, page):
-        self.test_username.fill("bobdylan")
-        self.test_password.fill("bobdylan")
+    def test_login(self, user_name, password):
+        self.test_username.fill(user_name)
+        self.test_password.fill(password)
         self.log_in_link.click()
-
 
 
 
