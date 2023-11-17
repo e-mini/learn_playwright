@@ -49,18 +49,12 @@ def test_can_register(page: Page):
     home_page.log_out_link.click()
 
 def test_can_still_login(page: Page):
-    # setup
-    page.goto("https://parabank.parasoft.com/parabank/index.htm")
+    home_page = HomePage(page)
+    home_page.load(page)
 
-    # test
-    page.get_by_text("name=username").fill("bobdylan")
-    page.get_by_text("name=password").fill("bobdylan")
-    page.get_by_text("value=Log In").click()
-   
+    home_page.test_registration(page)
 
+    expect(home_page.log_out_link).to_be_visible()
 
-    # assertion
-    expect(page.get_by_text("href=https://parabank.parasoft.com/parabank/logout.htm")).to_be_visible()
+    home_page.log_out_link.click()
 
-    # tear down
-    page.get_by_text("href=https://parabank.parasoft.com/parabank/logout.htm").click()
