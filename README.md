@@ -15,8 +15,9 @@ Test Automation Framework
 # Setup Instructions:
 
 1. clone repo
-2. create python virtual environment
-3. install all python packages
+2a. create python virtual environment `python -m venv venv`
+2b. activate virtual environment `source venv/bin/activate`
+3. install all python packages `python -m pip install -r requirements.txt`
 
 
 # NOTES:
